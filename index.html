@@ -5,89 +5,44 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css" type="text/css">
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
     <title>GifTastic</title>
   </head>
   <body>
-    <div class="container">
+    <div class="container mb-5">
         <div class="row">
           <div id="buttons">
           </div>
         </div>
     </div>
 
-    <div id="gif-container">
-    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8" id="gif-container">
+        </div>
+        <div class="col-lg-4" id="user-input">
+          <form>
+            <div class="form-group">
+              <label for="search-box">Add an emotion to search:</label>
+              <input type="text" class="form-control" id="search-box" aria-describedby="newSearch">
+            </div>
+            <button type="submit" class="btn btn-primary" id="new-search">Submit</button>
+          </form>
+        </div>
+      </div>
+  </div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    <script type="text/javascript">
-        const topics = ["happy", "sad", "mad", "embarrassed", "bashful", "confident", "disgusted", "confused"];
-
-        for (i = 0; i < topics.length; i++) {
-            const newBtn = $("<button>");
-            newBtn.attr("data-element", topics[i]);
-            newBtn.attr("type", "button");
-            newBtn.attr("class", "btn btn-outline-primary");
-            newBtn.text(topics[i]);
-            $("#buttons").append(newBtn);
-        }
-
-        $(document).on("click", ".gif", function() {
-          console.log("clicked");
-          const state = $(this).attr("data-state");
-          const stillState = $(this).attr("data-still");
-          const animateState = $(this).attr("data-animate");
-
-          if (state === "still") {
-            $(this).attr("src", animateState);
-            $(this).attr("data-state", "animate");
-          } else {
-            $(this).attr("src", stillState);
-            $(this).attr("data-state", "still");
-          }
-        });
-
-        $("button").on("click", function() {
-          var search = $(this).attr("data-element");
-          var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + search + "&api_key=vYFAdbiqcCWCsxLjDlaZqwXlD8JvvyR4&limit=10";
-
-          $.ajax({
-            url: queryURL,
-            method: "GET"
-          })
-          .then(function(response) {
-            console.log(response);
-            
-            var results = response.data;
-
-            for (var i = 0; i < results.length; i++) {
-                var rating = results[i].rating;
-                var p = $("<p>").text("Rating: " + rating);
-
-                var gifImage = $("<img>");
-                gifImage.attr("class", "gif");
-                gifImage.attr("src", results[i].images.fixed_width_still.url);
-                gifImage.attr("data-still", results[i].images.fixed_width_still.url);
-                gifImage.attr("data-animate", results[i].images.fixed_width.url);
-                gifImage.attr("data-state", "still");
-                
-                var gifDiv = $("<div>");
-
-                gifDiv.prepend(p);
-                gifDiv.prepend(gifImage);
-
-                $("#gif-container").prepend(gifDiv);
-            }
-          });
-        });
-
-
-    </script>
+    
+    <!-- Customer Javascript -->
+    <script src="app.js" type="text/javascript"></script>
   </body>
 </html>
